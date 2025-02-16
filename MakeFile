@@ -1,0 +1,20 @@
+# CC=gcc
+#TARGET = ocpp_driver
+# CFLAGS = -g -Wall
+
+#default: $(TARGET)
+
+# $(TARGET): $(TARGET).o ocpp.o 
+# 	$(CC) $(CFLAGS) -o $(TARGET) ocpp.o 
+
+# $(TARGET).o: $(TARGET).c ocpp.h
+# 	$(CC) $(CFLAGS) -c $(TARGET).c
+
+# ocpp.o: ocpp.h
+# 	$(CC) $(CFLAGS) -c ocpp.c
+
+# clean:
+# 	$(RM) $(TARGET) *.o *~
+
+driver:ocpp_driver.c 
+	$(CC) $(CFLAGS) -o ocpp_driver ocpp.c
