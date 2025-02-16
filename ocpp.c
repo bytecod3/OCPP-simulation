@@ -24,7 +24,6 @@ uint8_t get_str_length(const char* str) {
 char* get_substring(char* str, uint8_t start, uint8_t length) {
     char ss[6]; /*to store the substring*/
     strncpy(ss, str+start, length);
-    uint8_t nl_index =get_str_length(ss); 
     ss[length] = '\0'; /* nul terminate */
     char* t = (char*) malloc(sizeof(char) + 1); //  TODO: not advised on MCUs - look for alternatives
 

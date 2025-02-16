@@ -8,6 +8,8 @@ int main() {
 
     if(ocpp_establish_handshake(cms_url)) { // TODO: write unit test for this
         printf("URL OK\n");
+
+        
     } else {
         printf("URL FAIL\n");
     }
