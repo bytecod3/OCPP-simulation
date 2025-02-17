@@ -2,7 +2,7 @@
 This is the implementation of the OCPP-1.6 protocol
 
 ### Tools
-- Firmware-simulation: C
+- Charge point implementation: Python
 - CMS Websockets server: Python
 - Platform: Windows
 
@@ -23,7 +23,10 @@ For implementation of this protocol, I mapped out the necessary functionality I 
 This implementation builds only the first 3 of these.
 
 ---
-To connect to the CSMS via websockets, we need to have a websocket client and server. The client was build in C using ```libwebsockets```.  
+To connect to the CSMS via websockets, we need to have a websocket client and server. The intended client was in C using ```libwebsockets```.  
+
+I implement the client in python using websockets and asyncio.
+
 Once a websocket connection is SUCCESS, the client(charge point) can send messages to the server. These PDUs(protocol data units) are formatted as JSON objects to conform with the **OCPP-JSON-1.6 Specification**. 
 
 
@@ -43,7 +46,7 @@ The boot notification request looks like shown below:
                 "firmware_version":     "1.1",
                 "iccid":        "1",
                 "imsi": "1",
-                "meter_type":   "dual-gun",
+                "meter_type":   "dual-socket",
                 "meter_serial_number":  "CJ-ABC123ABC"
         }
 }
@@ -65,4 +68,20 @@ The server response is expected to have the following structure:
 #### Heartbeat
 The interval value in the above server response represents the heartbeat interval set by the CSMS. 
 
-The server is built using python.
+---
+On sending the boot notification, the server processes the payload and responds with the packet shown below
+
+### Challenges encountered
+- Windows envronment setup using C - libsockets 
+- Time taken to understand and implement a clean working OCPP protocol in C 
+
+### Key OCPP concepts learned 
+- OCPP flow from when an EVSE boots all the way to completing/closing a charging session
+- How the EV hardware ecosystem work especially in charging and integration with OCPP protocol
+
+### Most relevant sections of the OCPP specifications 
+Having used the OCPP-JSON-1.6 protocol, The most relevant sections are:
+- **Section 3.1 - Connection** - explains how a connection is made to the CMS via websockets
+- **Section 3.2 - Server response** - How the server responds to charge point requests depending on the message type
+- **Section 4 - Message and Message types**  - when sending or receiving message from server, the message type is critical to be known e.g CALL, CALLRESULT and CALLERROR. This section was heavily used when constructin the JSON packets to send to server and when receiving the same packets as responses from the CMS.
+

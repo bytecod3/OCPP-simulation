@@ -1,44 +1,52 @@
+# This file implements a simplr CMS server for an ocpp protocol
+# This is the backend that receives the messages from charge point client
+
 import asyncio
+import logging
 import websockets
+from websockets.server import serve
+from ocpp.routing import on
+from ocpp.v16 import call_result
+from ocpp.v16 import ChargePoint as cp
+from ocpp.v16 import call
 
-# Set of connected clients
-connected_clients = set()
+logging.basicConfig(level=logging.INFO)
 
-async def process_message(message):
-    """Process the received message and return a response."""
-    print(f"Received: {message}")
-    
-    # Example: Convert message to uppercase
-    response = message.upper()
-    
-    return response
+class ChargePoint(cp):
+    async def on_connect(self):
+        logging.info(f"Charge Point {self.id} connected.")
 
-# Function to handle each client connection
-async def handle_client(websocket, path=None):
-    # Add the new client to the set of connected clients
-    connected_clients.add(websocket)
-    try:
-        # Listen for messages from the client
-        async for message in websocket:
+    @on("BootNotification")
+    async def on_boot_notification(self, charge_point_model, charge_point_vendor, **kwargs):
+        logging.info(f"Received BootNotification from {self.id}: Model={charge_point_model}, Vendor={charge_point_vendor}")
+        return call_result.BootNotification(
+            current_time="2025-02-17T12:00:00Z",
+            interval=10,
+            status="Accepted"
+        )
 
-            # Broadcast the message to all other connected clients
-            # for client in connected_clients:
-            #     if client != websocket:
-            #         await client.send(message)
-            response = await process_message(message)
-            await websocket.send(response)
+    @on("Heartbeat")
+    async def on_heartbeat(self):
+        logging.info(f"Heartbeat received from {self.id}")
+        return call_result.HeartbeatPayload(
+            current_time="2025-02-17T12:00:00Z"
+        )
 
-    except websockets.exceptions.ConnectionClosed:
-        pass
-    finally:
-        # Remove the client from the set of connected clients
-        connected_clients.remove(websocket)
+    @on("Authorize")
+    async def on_authorize(self, id_tag):
+        logging.info(f"Authorization request for ID tag {id_tag}")
+        return call_result.AuthorizePayload(id_tag_info={"status": "Accepted"})
 
-# Main function to start the WebSocket server
+async def on_new_connection(websocket, path):
+    charge_point_id = path.strip("/")
+    charge_point = ChargePoint(charge_point_id, websocket)
+
+    await charge_point.start()
+
 async def main():
-    server = await websockets.serve(handle_client, 'localhost', 8000)
+    server = await serve(on_new_connection, "127.0.0.1", 9000)
+    logging.info("OCPP 1.6 Central System started on ws://127.0.0.1:9000")
     await server.wait_closed()
 
-# Run the server
 if __name__ == "__main__":
     asyncio.run(main())

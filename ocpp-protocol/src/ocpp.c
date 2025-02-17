@@ -134,7 +134,9 @@ uint8_t ocpp_establish_handshake() {
 }
 
 void ocpp_send_boot_notification() {
-
+    // compose packet 
+    // send to server
+    // wait for response 
 }
 
 void ocpp_authorize() {
