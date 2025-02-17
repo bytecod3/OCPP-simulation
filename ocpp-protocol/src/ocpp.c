@@ -61,20 +61,32 @@ char* compose_json_boot_request() {
     if(boot_notification_obj == NULL) {
         goto end;
     }
+
+    call_type = cJSON_CreateNumber(2);
+    cJSON_AddItemToObject(boot_notification_obj, "call_type", call_type);
+
+    msg_id = cJSON_CreateString("msg_001");
+    cJSON_AddItemToObject(boot_notification_obj, "id", msg_id);
+
+    msg_type = cJSON_CreateString("BootNotification");
+    cJSON_AddItemToObject(boot_notification_obj, "type", msg_type);
     
     properties = cJSON_CreateObject();
     if(properties == NULL) {
         goto end;
     }
-    charge_point_vendor = cJSON_CreateString("CHAJI"); // TODO: NULL checks
-    charge_point_model = cJSON_CreateString("charge_point_model");
-    charge_point_serial_number = cJSON_CreateString("charge_point_serial_number");
-    charge_box_serial_number = cJSON_CreateString("charge_box_serial_number");
-    firmware_version = cJSON_CreateString("firmware_version");
-    iccid = cJSON_CreateString("iccid");
-    imsi = cJSON_CreateString("imsi");
-    meter_type = cJSON_CreateString("meter_type");
-    meter_serial_number = cJSON_CreateString("meter_serial_number");
+
+    // TODO: NULL checks
+    // TODO: make string variables dynamic
+    charge_point_vendor = cJSON_CreateString("CHAJI"); 
+    charge_point_model = cJSON_CreateString("CP001");
+    charge_point_serial_number = cJSON_CreateString("CJ-12345ABCD");
+    charge_box_serial_number = cJSON_CreateString("CJ-ABCD12345");
+    firmware_version = cJSON_CreateString("1.1");
+    iccid = cJSON_CreateString("1");
+    imsi = cJSON_CreateString("1");
+    meter_type = cJSON_CreateString("dual-gun");
+    meter_serial_number = cJSON_CreateString("CJ-ABC123ABC");
 
     /* append items to properties object*/
     cJSON_AddItemToObject(properties, "charge_point_vendor", charge_point_vendor);
@@ -110,12 +122,42 @@ uint8_t ocpp_establish_handshake() {
 
         printf("%s\n", t);
 
+        // connect to websockets server
+        
+        // if connection OK, return 1
+
         return 1;
     } else {
         return 0;
     }
 
 }
+
+void ocpp_send_boot_notification() {
+
+}
+
+void ocpp_authorize() {
+
+}
+
+void ocpp_start_start_transaction() {
+
+}
+
+void ocpp_stop_transaction() {
+
+}
+
+void ocpp_heartbeat() {
+
+}
+
+void ocpp_status_notification() {
+
+}
+
+
 
 // void ocpp_server_response(char*) {
     // receive the server response and save into a buffer
