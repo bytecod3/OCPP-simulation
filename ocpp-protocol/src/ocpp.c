@@ -66,7 +66,7 @@ char* compose_json_boot_request() {
     if(properties == NULL) {
         goto end;
     }
-    charge_point_vendor = cJSON_CreateString("charge_point_vendor"); // TODO: NULL checks
+    charge_point_vendor = cJSON_CreateString("CHAJI"); // TODO: NULL checks
     charge_point_model = cJSON_CreateString("charge_point_model");
     charge_point_serial_number = cJSON_CreateString("charge_point_serial_number");
     charge_box_serial_number = cJSON_CreateString("charge_box_serial_number");

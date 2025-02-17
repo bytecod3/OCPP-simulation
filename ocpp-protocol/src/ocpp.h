@@ -18,5 +18,4 @@ char* get_substring(char* str, uint8_t start, uint8_t length);
 uint8_t get_str_length(const char* str);
 char* compose_json_boot_request();
 
-
 #endif

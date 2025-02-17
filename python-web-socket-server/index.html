@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script>
+    window.onload = () => {
+        if ('WebSocket' in window) {
+            // create websocket connection
+            let ws = new WebSocket('ws://localhost:8000/websocket');
+
+            // push a message when the connection is successful, then the server can start pushing data
+            ws.onopen = () => {
+                console.log('Sent---');
+                ws.send('Hello');
+            }
+
+            // received message
+            ws.onmessage = (message) => {
+                let data = message.data;
+                console.log('Received---', data);
+            }
+            ws.onerror = () => {
+                console.error('websocket fail');
+            }
+        } else {
+            console.error('dont support websocket');
+        };
+    };
+</script>
+
+</head>
+<body>
+  
+</body>
+</html>
