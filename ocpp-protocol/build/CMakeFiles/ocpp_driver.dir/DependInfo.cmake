@@ -8,6 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
+  "E:/chaji/OCPP-simulation/ocpp-protocol/lib/cJSON.c" "CMakeFiles/ocpp_driver.dir/lib/cJSON.c.obj" "gcc" "CMakeFiles/ocpp_driver.dir/lib/cJSON.c.obj.d"
   "E:/chaji/OCPP-simulation/ocpp-protocol/src/ocpp.c" "CMakeFiles/ocpp_driver.dir/src/ocpp.c.obj" "gcc" "CMakeFiles/ocpp_driver.dir/src/ocpp.c.obj.d"
   "E:/chaji/OCPP-simulation/ocpp-protocol/src/ocpp_driver.c" "CMakeFiles/ocpp_driver.dir/src/ocpp_driver.c.obj" "gcc" "CMakeFiles/ocpp_driver.dir/src/ocpp_driver.c.obj.d"
   )

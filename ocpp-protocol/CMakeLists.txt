@@ -12,6 +12,8 @@ add_executable(ocpp_driver
         src/ocpp_driver.c
         src/ocpp.h
         src/ocpp.c
+        lib/cJSON.c
+        lib/cJSON.h
 )
 
 # set the output folder where the program will be created 

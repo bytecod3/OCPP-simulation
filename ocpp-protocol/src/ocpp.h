@@ -2,7 +2,7 @@
 #define OCPP_H
 
 #include <stdint.h>
-#include "lib/cJSON.h"
+#include "../lib/cJSON.h"
 
 /**
  * @brief establish connection to CMS using the endpoint provided
@@ -10,9 +10,7 @@
  */
 
 uint8_t ocpp_establish_handshake(void);
-
 void ocpp_server_response(char*);
-
 void ocpp_heartbeat();
 
 /* helper functions */

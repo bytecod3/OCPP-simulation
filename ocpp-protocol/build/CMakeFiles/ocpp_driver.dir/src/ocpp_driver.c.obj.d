@@ -8,4 +8,5 @@ CMakeFiles/ocpp_driver.dir/src/ocpp_driver.c.obj: \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\stdarg.h \
  E:\chaji\OCPP-simulation\ocpp-protocol\src\ocpp.h \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\stdint.h \
- c:\mingw\include\stdint.h
+ c:\mingw\include\stdint.h \
+ e:\chaji\ocpp-simulation\ocpp-protocol\lib\cjson.h

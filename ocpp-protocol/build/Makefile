@@ -128,6 +128,30 @@ ocpp_driver/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\ocpp_driver.dir\build.make CMakeFiles/ocpp_driver.dir/build
 .PHONY : ocpp_driver/fast
 
+lib/cJSON.obj: lib/cJSON.c.obj
+.PHONY : lib/cJSON.obj
+
+# target to build an object file
+lib/cJSON.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ocpp_driver.dir\build.make CMakeFiles/ocpp_driver.dir/lib/cJSON.c.obj
+.PHONY : lib/cJSON.c.obj
+
+lib/cJSON.i: lib/cJSON.c.i
+.PHONY : lib/cJSON.i
+
+# target to preprocess a source file
+lib/cJSON.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ocpp_driver.dir\build.make CMakeFiles/ocpp_driver.dir/lib/cJSON.c.i
+.PHONY : lib/cJSON.c.i
+
+lib/cJSON.s: lib/cJSON.c.s
+.PHONY : lib/cJSON.s
+
+# target to generate assembly for a file
+lib/cJSON.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\ocpp_driver.dir\build.make CMakeFiles/ocpp_driver.dir/lib/cJSON.c.s
+.PHONY : lib/cJSON.c.s
+
 src/ocpp.obj: src/ocpp.c.obj
 .PHONY : src/ocpp.obj
 
@@ -185,6 +209,9 @@ help:
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... ocpp_driver
+	@echo ... lib/cJSON.obj
+	@echo ... lib/cJSON.i
+	@echo ... lib/cJSON.s
 	@echo ... src/ocpp.obj
 	@echo ... src/ocpp.i
 	@echo ... src/ocpp.s

@@ -1,4 +1,6 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/ocpp_driver.dir/lib/cJSON.c.obj"
+  "CMakeFiles/ocpp_driver.dir/lib/cJSON.c.obj.d"
   "CMakeFiles/ocpp_driver.dir/src/ocpp.c.obj"
   "CMakeFiles/ocpp_driver.dir/src/ocpp.c.obj.d"
   "CMakeFiles/ocpp_driver.dir/src/ocpp_driver.c.obj"

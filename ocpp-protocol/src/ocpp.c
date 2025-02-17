@@ -1,6 +1,7 @@
 /**
  * Handshake 
  */
+#include <stdio.h>
 #include <string.h>
 #include <stdint.h>
 #include <stdlib.h>
@@ -40,8 +41,7 @@ char* get_substring(char* str, uint8_t start, uint8_t length) {
  * @brief generate BOOT NOTIFICATION JSON PDU 
  */
 char* compose_json_boot_request() {
-    char* 
-    cJSON* string = NULL;
+    char* string = NULL;
 
     cJSON* call_type = NULL;
     cJSON* msg_id = NULL;
@@ -66,26 +66,49 @@ char* compose_json_boot_request() {
     if(properties == NULL) {
         goto end;
     }
-    charge_point_vendor = cJSON_CreateString("charge_point_vendor");
-    cJSON_AddItemToObject(properties, "properties", charge_point_vendor);
+    charge_point_vendor = cJSON_CreateString("charge_point_vendor"); // TODO: NULL checks
+    charge_point_model = cJSON_CreateString("charge_point_model");
+    charge_point_serial_number = cJSON_CreateString("charge_point_serial_number");
+    charge_box_serial_number = cJSON_CreateString("charge_box_serial_number");
+    firmware_version = cJSON_CreateString("firmware_version");
+    iccid = cJSON_CreateString("iccid");
+    imsi = cJSON_CreateString("imsi");
+    meter_type = cJSON_CreateString("meter_type");
+    meter_serial_number = cJSON_CreateString("meter_serial_number");
+
+    /* append items to properties object*/
+    cJSON_AddItemToObject(properties, "charge_point_vendor", charge_point_vendor);
+    cJSON_AddItemToObject(properties, "charge_point_model", charge_point_model);
+    cJSON_AddItemToObject(properties, "charge_point_serial_number", charge_point_serial_number);
+    cJSON_AddItemToObject(properties, "charge_box_serial_number", charge_box_serial_number);
+    cJSON_AddItemToObject(properties, "firmware_version", firmware_version);
+    cJSON_AddItemToObject(properties, "iccid", iccid);
+    cJSON_AddItemToObject(properties, "imsi", imsi);
+    cJSON_AddItemToObject(properties, "meter_type", meter_type);
+    cJSON_AddItemToObject(properties, "meter_serial_number", meter_serial_number);
+
+    /* add properties object to boot_notification  object */
+    cJSON_AddItemToObject(boot_notification_obj, "properties", properties);
+
+    string = cJSON_Print(boot_notification_obj);
+    if(string == NULL) printf("%s\n","Failed to print boot notification\n");
 
     end:
-    cJSON_Delete(obj);
+    cJSON_Delete(boot_notification_obj);
     return string;
 }
 
-uint8_t ocpp_establish_handshake(char* cms_url) {
-    /*check for correct URL - I am checking if the URL starts
-    with "ws://"
-    */ 
+uint8_t ocpp_establish_handshake() {
+    /*check for correct URL - I am checking if the URL starts with "ws://" */ 
 
     if(strcmp("ws://", get_substring(cms_url, 0, 5)) == 0) {
         // modify the url to append the charge point identity
         strcat(cms_url, charge_point_id);
         
-        /* new CMS url with charge point ID - create JSON object*/
+        /* new CMS url with charge point ID - create JSON object?? */
+        char* t = compose_json_boot_request();
 
-        
+        printf("%s\n", t);
 
         return 1;
     } else {
@@ -93,7 +116,6 @@ uint8_t ocpp_establish_handshake(char* cms_url) {
     }
 
 }
-
 
 // void ocpp_server_response(char*) {
     // receive the server response and save into a buffer
