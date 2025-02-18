@@ -12,12 +12,14 @@ from ocpp.v16 import call
 
 logging.basicConfig(level=logging.INFO)
 
+# class to simulate a single chargepoint message processor 
 class ChargePoint(cp):
     async def on_connect(self):
         logging.info(f"Charge Point {self.id} connected.")
 
     @on("BootNotification")
     async def on_boot_notification(self, charge_point_model, charge_point_vendor, **kwargs):
+        # Construct a response message on boot notification reception from a charge point
         logging.info(f"Received BootNotification from {self.id}: Model={charge_point_model}, Vendor={charge_point_vendor}")
         return call_result.BootNotification(
             current_time="2025-02-17T12:00:00Z",
@@ -27,6 +29,7 @@ class ChargePoint(cp):
 
     @on("Heartbeat")
     async def on_heartbeat(self):
+        # Heart beat is responsible for telling the CMS that the charge point is still ON 
         logging.info(f"Heartbeat received from {self.id}")
         return call_result.HeartbeatPayload(
             current_time="2025-02-17T12:00:00Z"
